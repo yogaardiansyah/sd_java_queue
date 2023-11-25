@@ -1,43 +1,42 @@
 import java.util.Scanner;
 
 public class Queue {
-    static int MAX;
-    static int[] queueArr;
-    static int rear = -1;
-    static int front = -1;
+    static int MAX;          // Maksimum panjang Queue
+    static int[] queueArr;   // Array untuk menyimpan elemen-elemen Queue
+    static int rear = -1;    // Indeks untuk elemen terakhir di Queue
+    static int front = -1;   // Indeks untuk elemen pertama di Queue
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        initializeQueue();
+        initializeQueue();   // Inisialisasi Queue
 
         int choice;
         while (true) {
-            showMenu();
+            showMenu();      // Tampilkan menu operasi pada Queue
 
             if (scanner.hasNextInt()) {
                 choice = scanner.nextInt();
                 scanner.nextLine(); // Membersihkan newline dari buffer
             } else {
-                System.out.println("Input Harus Integer");
-                scanner.nextLine(); // Membersihkan newline dari buffer
+                handleInvalidInput();
                 continue; // Restart the loop
             }
 
             switch (choice) {
                 case 1:
-                    insert();
+                    insert();    // Panggil metode untuk operasi insert
                     break;
                 case 2:
-                    display();
+                    display();   // Panggil metode untuk operasi display
                     break;
                 case 3:
-                    delete();
+                    delete();    // Panggil metode untuk operasi delete
                     break;
                 case 4:
-                    closeScanner();
+                    closeScanner(); // Panggil metode untuk menutup Scanner dan keluar dari program
                     System.exit(0);
                 default:
-                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+                    handleInvalidChoice();
                     break;
             }
         }
@@ -51,16 +50,15 @@ public class Queue {
                 if (MAX > 0) {
                     break;
                 } else {
-                    System.out.println("Panjang nilai Queue harus lebih besar dari 0.");
+                    handleInvalidInput("Panjang nilai Queue harus lebih besar dari 0.");
                 }
             } else {
-                System.out.println("Input Harus Integer");
-                scanner.nextLine(); // Membersihkan newline dari buffer
+                handleInvalidInput();
             }
         }
         scanner.nextLine(); // Membersihkan newline dari buffer
 
-        queueArr = new int[MAX];
+        queueArr = new int[MAX]; // Inisialisasi array dengan panjang MAX
     }
 
     static void showMenu() {
@@ -94,8 +92,7 @@ public class Queue {
                 System.out.println(
                         "Elemen dimasukan adalah : " + addedItem + ". Queue Front: " + front + ", Rear: " + rear);
             } else {
-                System.out.println("Input Harus Integer");
-                scanner.nextLine(); // Membersihkan newline dari buffer
+                handleInvalidInput();
             }
         }
     }
@@ -142,5 +139,22 @@ public class Queue {
         scanner.close();
         System.out.println("Program Selesai.");
         System.out.println("Dibuat oleh Yoga Ardiansyah 2IA25 51422643.");
+    }
+
+    // Metode untuk menangani input yang tidak valid
+    static void handleInvalidInput() {
+        System.out.println("Input Harus Integer");
+        scanner.nextLine(); // Membersihkan newline dari buffer
+    }
+
+    // Metode untuk menangani pilihan menu yang tidak valid
+    static void handleInvalidChoice() {
+        System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+    }
+
+    // Metode untuk menangani input yang tidak valid dengan pesan khusus
+    static void handleInvalidInput(String message) {
+        System.out.println(message);
+        scanner.nextLine(); // Membersihkan newline dari buffer
     }
 }
